@@ -147,6 +147,7 @@ p.lead {
 
   #sideNav .navbar-collapse .navbar-nav .nav-item {
     display: block;
+    visibility: hidden;
   }
 
   #sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
