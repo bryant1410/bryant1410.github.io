@@ -2,6 +2,12 @@
 <html lang="en">
 
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GEKPMQP8F"></script>
   <script>
     if (document.location.hostname !== "localhost") {
@@ -17,11 +23,11 @@
       gtag('config', 'G-2GEKPMQP8F');
     }
   </script>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <meta name="description"
         content="👋 I'm Santiago Castro, a Uruguayan 🇺🇾 living in the San Francisco Bay Area (USA). I'm a Research Scientist at Netflix. I have a PhD in CS from the University of Michigan (2024), advised by Rada Mihalcea. My main research interest is in holistically representing multimodal sources (i.e., Vision and Language) for general-purpose applications, especially for video tasks. I'm also interested in Computational Humor.">
   <meta name="author" content="Santiago Castro (bryant1410)">
+
   <meta property="og:title" content="Santiago Castro">
   <meta property="og:type" content="profile">
   <meta property="profile:first_name" content="Santiago">
@@ -38,24 +44,41 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="A screenshot of the website.">
 
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Santiago Castro">
+  <meta name="twitter:description"
+        content="👋 I'm Santiago Castro, a Uruguayan 🇺🇾 living in the San Francisco Bay Area (USA). I'm a Research Scientist at Netflix.">
+  <meta name="twitter:image" content="https://santi.uy/img/opengraph.png">
+  <meta name="twitter:creator" content="@bryant1410">
+
   <title>Santiago Castro</title>
 
-  <link as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <link as="font" href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
-  <link as="font" href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
-  <link as="image" rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="canonical" href="https://santi.uy/">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link href="https://fonts.googleapis.com/css2?family=Saira+Extra+Condensed:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,800;1,400;1,800&display=swap"
+        rel="stylesheet">
+
   <style>
     :root {
       --primary-color: #bd5d38;
       --secondary-color: #824027;
-      --tertiary-color: #d48a6e;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Muli', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+      margin: 0;
+      font-family: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #6c757d;
       padding-top: 27px;
-      color: #868e96;
     }
 
     @media (min-width: 992px) {
@@ -63,166 +86,6 @@
         padding-top: 0;
         padding-left: 17rem;
       }
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #343a40;
-    }
-
-    h1 {
-      font-size: 6rem;
-      line-height: 5.5rem;
-    }
-
-    h2 {
-      font-size: 3.5rem;
-    }
-
-    h3 {
-      font-size: 2rem;
-    }
-
-    p.lead {
-      font-size: 1.15rem;
-      font-weight: 400;
-    }
-
-    .subheading {
-      font-weight: 500;
-      font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-      font-size: 1.5rem;
-    }
-
-    .social-icons a {
-      display: inline-block;
-      height: 3.5rem;
-      width: 3.5rem;
-      background-color: #495057;
-      color: #fff !important;
-      border-radius: 100%;
-      text-align: center;
-      font-size: 1.5rem;
-      line-height: 3.5rem;
-      margin-bottom: 1rem;
-      margin-right: 1rem;
-    }
-
-    .social-icons a:last-child {
-      margin-right: 0;
-    }
-
-    .social-icons a:hover {
-      background-color: var(--primary-color);
-    }
-
-    .dev-icons .list-inline-item i:hover {
-      color: var(--primary-color);
-    }
-
-    #sideNav .navbar-nav .nav-item .nav-link {
-      font-weight: 800;
-      letter-spacing: 0.05rem;
-      text-transform: uppercase;
-    }
-
-    #sideNav {
-      outline-color: var(--tertiary-color);
-    }
-
-    @media (min-width: 992px) {
-      #sideNav {
-        text-align: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        width: 17rem;
-        height: 100vh;
-      }
-
-      #sideNav .navbar-brand {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        margin: auto auto 0;
-        padding: 0.5rem;
-      }
-
-      #sideNav .navbar-brand .img-profile {
-        max-width: 10rem;
-        max-height: 10rem;
-        border: 0.5rem solid rgba(255, 255, 255, 0.2);
-      }
-
-      #sideNav .navbar-collapse {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: start;
-        -ms-flex-align: start;
-        align-items: flex-start;
-        -webkit-box-flex: 0;
-        flex-grow: 0;
-        width: 100%;
-        margin-bottom: auto;
-      }
-
-      #sideNav .navbar-collapse .navbar-nav {
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        width: 100%;
-      }
-
-      #sideNav .navbar-collapse .navbar-nav .nav-item {
-        display: block;
-        visibility: hidden;
-      }
-
-      #sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
-        display: block;
-      }
-    }
-
-    section.resume-section {
-      max-width: 75rem;
-    }
-
-    @media (min-width: 768px) {
-      section.resume-section {
-        min-height: 100vh;
-      }
-
-    }
-
-    @media (min-width: 992px) {
-      section.resume-section {
-        padding-top: 3rem !important;
-        padding-bottom: 3rem !important;
-      }
-    }
-
-    .bg-primary {
-      background-color: var(--primary-color) !important;
-    }
-
-    .text-primary {
-      color: var(--primary-color) !important;
     }
 
     a {
@@ -233,108 +96,231 @@
       color: var(--secondary-color);
     }
 
-    .fa-cv:before {
-      font-family: sans-serif;
-      font-weight: bold;
-      content: 'CV';
+    h1 {
+      margin: 0;
+      font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #343a40;
+      font-size: 6rem;
+      line-height: 5.5rem;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    .text-primary {
+      color: var(--primary-color);
     }
 
     code {
       font-family: monospace;
-      color: lightgray;
+      color: #c0c6cc;
+    }
+
+    /*
+     * Decorative profile rail: a fixed orange column on desktop (with the photo),
+     * collapsing to a thin orange accent bar on mobile (the photo then appears in
+     * the heading instead). Replaces the old empty-navbar spacer.
+     */
+    .profile-rail {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 27px;
+      z-index: 1030;
+      background-color: var(--primary-color);
+    }
+
+    .profile-rail .profile-photo {
+      display: none;
+    }
+
+    @media (min-width: 992px) {
+      .profile-rail {
+        right: auto;
+        width: 17rem;
+        height: 100vh;
+        /* Extra bottom padding lifts the centered photo above the middle,
+           matching the original layout. */
+        padding: 0.5rem 0.5rem 15.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .profile-rail .profile-photo {
+        display: block;
+        border: 0.5rem solid rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    .intro {
+      max-width: 75rem;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .intro {
+        min-height: 100vh;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .intro {
+        padding: 3rem;
+      }
+    }
+
+    .intro-inner {
+      width: 100%;
+    }
+
+    .name {
+      margin-bottom: 0;
+    }
+
+    .name .profile-photo {
+      display: block;
+      margin: 0 0 0.5rem;
+    }
+
+    @media (min-width: 992px) {
+      .name .profile-photo {
+        display: none;
+      }
+    }
+
+    .profile-photo {
+      width: 10rem;
+      height: 10rem;
+      max-width: 100%;
+      border-radius: 50%;
+    }
+
+    .subheading {
+      margin: 0 0 1.5rem;
+      font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+      font-weight: 500;
+      font-size: 1.25rem;
+    }
+
+    .lead {
+      margin-bottom: 1rem;
+      font-size: 1.15rem;
+      font-weight: 400;
+    }
+
+    .lead-last {
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 992px) {
+      .subheading {
+        margin-bottom: 3rem;
+      }
+
+      .lead-last {
+        margin-bottom: 3rem;
+      }
+    }
+
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      height: 3.5rem;
+      width: 3.5rem;
+      margin-bottom: 1rem;
+      margin-right: 1rem;
+      background-color: #495057;
+      border-radius: 100%;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .social-icons a:last-child {
+      margin-right: 0;
+    }
+
+    .social-icons a:hover {
+      color: #fff;
+      background-color: var(--primary-color);
+    }
+
+    .social-icons a svg {
+      width: auto;
+      height: 1.35rem;
+      fill: currentColor;
+    }
+
+    /* "CV" is an outlined (text-to-path) glyph in a tight viewBox, so it
+       flex-centers exactly like the brand icons; sized down a bit to match. */
+    .social-icons a svg.cv {
+      height: 1rem;
+      /* The brand glyphs sit a hair above their viewBox center; match them.
+         (Geometric nudge on a path — consistent across browsers.) */
+      transform: translateY(-1.5px);
     }
   </style>
 </head>
 
-<body id="page-top">
+<body>
 
-<!-- I keep the navbar because it plays nicely with the spacing and adds nice aesthetics. -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-  <a class="navbar-brand">
-    <span class="d-none d-lg-block">
-      <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="img/profile.jpg"
-           alt="Santiago Castro's profile photo">
-    </span>
-  </a>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link">&nbsp;</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link">&nbsp;</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link">&nbsp;</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link">&nbsp;</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link">&nbsp;</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link">&nbsp;</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-<div class="container-fluid p-0">
-  <section class="resume-section p-3 p-lg-5 d-flex align-items-center">
-    <div class="w-100">
-      <h1 class="mb-0">
-        <span class="d-block d-lg-none">
-          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="img/profile.jpg"
-               alt="Santiago Castro's profile photo">
-        </span>
-        Santiago
-        <span class="text-primary">Castro</span>
-      </h1>
-      <div class="subheading mb-4 mb-lg-5">
-        <code>@bryant1410</code>
-      </div>
-      <!--suppress GrazieInspection -->
-      <p class="lead mb-3">
-        👋 I'm Santiago Castro, a Uruguayan&nbsp;🇺🇾 living in the San Francisco Bay Area (USA).
-        I'm a Research Scientist at <a href="https://www.netflix.com/">Netflix</a>. I have a PhD in CS from the
-        <a href="https://umich.edu">University of Michigan</a> (2024), advised by
-        <a href="https://web.eecs.umich.edu/~mihalcea/">Rada Mihalcea</a>.
-      </p>
-      <p class="lead mb-4 mb-lg-5">
-        My main research interest is in holistically representing multimodal sources
-        (i.e., Vision and Language) for general-purpose applications, especially for video tasks.
-        I'm also interested in Computational Humor.
-      </p>
-      <div class="social-icons">
-        <!--suppress HtmlUnknownTarget -->
-        <a href="resume/main.pdf">
-          <i class="fab fa-cv"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/santiagocastroserra/">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-        <a href="https://scholar.google.com/citations?user=i2LNBfUAAAAJ">
-          <i class="fab fa-google"></i>
-        </a>
-        <a href="https://github.com/bryant1410">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://twitter.com/bryant1410">
-          <i class="fab fa-x-twitter"></i>
-        </a>
-        <a href="https://stackoverflow.com/users/1165181/bryant1410">
-          <i class="fab fa-stack-overflow"></i>
-        </a>
-      </div>
-    </div>
-  </section>
+<div class="profile-rail" aria-hidden="true">
+  <img class="profile-photo" src="img/profile.jpg" width="160" height="160" alt="">
 </div>
 
-<script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
-<script async src="https://kit.fontawesome.com/ed64dade59.js" crossorigin="anonymous"></script>
+<main class="intro">
+  <div class="intro-inner">
+    <h1 class="name">
+      <img class="profile-photo" src="img/profile.jpg" width="160" height="160" alt="Santiago Castro's profile photo">
+      Santiago <span class="text-primary">Castro</span>
+    </h1>
+    <div class="subheading"><code>@bryant1410</code></div>
+    <!--suppress GrazieInspection -->
+    <p class="lead">
+      👋 I'm Santiago Castro, a Uruguayan&nbsp;🇺🇾 living in the San Francisco Bay Area (USA).
+      I'm a Research Scientist at <a href="https://www.netflix.com/">Netflix</a>. I have a PhD in CS from the
+      <a href="https://umich.edu">University of Michigan</a> (2024), advised by
+      <a href="https://web.eecs.umich.edu/~mihalcea/">Rada Mihalcea</a>.
+    </p>
+    <p class="lead lead-last">
+      My main research interest is in holistically representing multimodal sources
+      (i.e., Vision and Language) for general-purpose applications, especially for video tasks.
+      I'm also interested in Computational Humor.
+    </p>
+    <!-- Brand icons from Font Awesome Free 6.7.2, CC BY 4.0 (https://fontawesome.com) -->
+    <div class="social-icons">
+      <!--suppress HtmlUnknownTarget -->
+      <a href="resume/main.pdf" aria-label="CV (curriculum vitae, PDF)">
+        <svg class="cv" viewBox="0 0 348.75 181.52344" aria-hidden="true" focusable="false"><path d="m 148.82812,168.51562 q -12.42187,6.44532 -25.89843,9.72657 -13.47656,3.28125 -28.125005,3.28125 -43.710935,0 -69.25781,-24.375 Q 0,132.65625 0,90.82031 0,48.867187 25.546875,24.492187 51.09375,0 94.804685,0 109.45313,0 122.92969,3.28125 136.40625,6.5625 148.82812,13.007812 V 49.21875 q -12.53906,-8.554688 -24.72656,-12.539063 -12.1875,-3.984375 -25.664065,-3.984375 -24.14062,0 -37.968745,15.46875 -13.828125,15.468748 -13.828125,42.656248 0,27.07031 13.828125,42.53906 13.828125,15.46875 37.968745,15.46875 13.476565,0 25.664065,-3.98437 12.1875,-3.98438 24.72656,-12.53906 z M 165.35156,3.164062 h 45.35156 L 257.10937,132.30469 303.39843,3.164062 H 348.75 L 283.94531,178.125 h -53.78906 z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/santiagocastroserra/" aria-label="LinkedIn">
+        <svg viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+      </a>
+      <a href="https://scholar.google.com/citations?user=i2LNBfUAAAAJ" aria-label="Google Scholar">
+        <svg viewBox="0 0 488 512" aria-hidden="true" focusable="false"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>
+      </a>
+      <a href="https://github.com/bryant1410" aria-label="GitHub">
+        <svg viewBox="0 0 496 512" aria-hidden="true" focusable="false"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+      <a href="https://twitter.com/bryant1410" aria-label="X (Twitter)">
+        <svg viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+      </a>
+      <a href="https://stackoverflow.com/users/1165181/bryant1410" aria-label="Stack Overflow">
+        <svg viewBox="0 0 384 512" aria-hidden="true" focusable="false"><path d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"/></svg>
+      </a>
+    </div>
+  </div>
+</main>
 
 </body>
 
