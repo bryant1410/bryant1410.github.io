@@ -8,14 +8,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GEKPMQP8F"></script>
   <script>
-    if (document.location.hostname !== "localhost") {
-      window.dataLayer = window.dataLayer || [];
+    // Only load Google Analytics on the deployed site (not on localhost or file://).
+    if (document.location.hostname === "santi.uy") {
+      const gaScript = document.createElement("script");
+      gaScript.async = true;
+      // noinspection SpellCheckingInspection
+      gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-2GEKPMQP8F";
+      document.head.appendChild(gaScript);
 
-      function gtag() {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () {
         dataLayer.push(arguments);
-      }
+      };
 
       gtag('js', new Date());
 
