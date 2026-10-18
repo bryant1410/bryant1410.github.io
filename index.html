@@ -168,11 +168,12 @@
     }
 
     /*
-     * Decorative profile rail: a fixed orange column on desktop (with the photo),
-     * collapsing to a thin orange accent bar on mobile (the photo then appears in
-     * the heading instead). Replaces the old empty-navbar spacer.
+     * Decorative profile rail: on mobile, body::before draws the thin top orange
+     * accent bar while .profile-rail sits in normal flow right above the heading;
+     * on desktop, .profile-rail becomes the fixed left orange column.
      */
-    .profile-rail {
+    body::before {
+      content: "";
       position: fixed;
       top: 0;
       left: 0;
@@ -182,19 +183,34 @@
       background-color: var(--primary-color);
     }
 
-    .profile-rail .profile-photo {
-      display: none;
+    .profile-rail {
+      margin: 0 0 0.5rem;
+    }
+
+    .profile-photo {
+      display: block;
+      width: 10rem;
+      height: 10rem;
+      max-width: 100%;
+      border-radius: 50%;
     }
 
     @media (min-width: 992px) {
+      body::before {
+        display: none;
+      }
+
       .profile-rail {
-        right: auto;
+        position: fixed;
+        top: 0;
         bottom: 0;
+        left: 0;
         width: 17rem;
-        height: auto;
+        margin: 0;
         /* Extra bottom padding lifts the centered photo above the middle,
            matching the original layout. */
         padding: 0.5rem 0.5rem 15.5rem;
+        background-color: var(--primary-color);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -202,7 +218,6 @@
       }
 
       .profile-rail .profile-photo {
-        display: block;
         border: 0.5rem solid rgba(255, 255, 255, 0.2);
       }
     }
@@ -233,24 +248,6 @@
 
     .name {
       margin-bottom: 0;
-    }
-
-    .name .profile-photo {
-      display: block;
-      margin: 0 0 0.5rem;
-    }
-
-    @media (min-width: 992px) {
-      .name .profile-photo {
-        display: none;
-      }
-    }
-
-    .profile-photo {
-      width: 10rem;
-      height: 10rem;
-      max-width: 100%;
-      border-radius: 50%;
     }
 
     .subheading {
@@ -324,15 +321,12 @@
 
 <body>
 
-<div class="profile-rail" aria-hidden="true">
-  <img class="profile-photo" src="img/profile.jpg" width="160" height="160" alt="">
-</div>
-
 <main class="intro">
   <div class="intro-inner">
+    <div class="profile-rail" aria-hidden="true">
+      <img class="profile-photo" src="img/profile.jpg" width="160" height="160" fetchpriority="high" alt="">
+    </div>
     <h1 class="name">
-      <!-- Decorative (alt=""): the name right after it is the heading's accessible name. -->
-      <img class="profile-photo" src="img/profile.jpg" width="160" height="160" alt="">
       Santiago <span class="text-primary">Castro</span>
     </h1>
     <div class="subheading"><code>@bryant1410</code></div>
