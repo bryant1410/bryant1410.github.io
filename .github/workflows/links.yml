@@ -17,15 +17,41 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Fetch and extract links from the CV (served from another repo)
+        run: |
+          curl --fail --silent --show-error --location https://santi.uy/resume/main.pdf --output /tmp/resume.pdf
+          python3 - <<'PY'
+          import pathlib, re, sys, zlib
+
+          data = pathlib.Path("/tmp/resume.pdf").read_bytes()
+          chunks = [data]
+          for match in re.finditer(rb"stream\r?\n(.*?)\r?\nendstream", data, re.S):
+              try:
+                  chunks.append(zlib.decompress(match.group(1)))
+              except zlib.error:
+                  pass
+
+          uris = sorted({
+              re.sub(rb"\\([()\\])", rb"\1", u).decode("utf-8", "replace")
+              for chunk in chunks
+              for u in re.findall(rb"/URI\s*\(((?:\\.|[^\\()])*)\)", chunk)
+          })
+          if not uris:
+              sys.exit("No /URI links found in resume/main.pdf")
+
+          pathlib.Path("resume-links.txt").write_text("\n".join(uris) + "\n", encoding="utf-8")
+          print(f"Extracted {len(uris)} unique links from resume/main.pdf")
+          PY
+
       - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
           # Relative links are checked against the checked-out files (`--root-dir` resolves root-relative ones like
-          # "/favicon.ico" in 404.html). The CV is served from a separate repo, so it's checked in the next step.
-          # The bare Google Fonts origins are `preconnect` hints, not pages. web.eecs.umich.edu doesn't send its
-          # intermediate TLS certificate (browsers cope, strict clients like lychee/curl don't), so it's skipped.
-          # LinkedIn blocks bots (HTTP 999), and umich.edu/Stack Overflow/X often block or rate-limit CI, hence the
-          # extra accepted status codes.
+          # "/favicon.ico" in 404.html). The CV is served from a separate repo, so the previous step downloads it and
+          # dumps its links into `resume-links.txt`. The bare Google Fonts origins are `preconnect` hints, not pages.
+          # web.eecs.umich.edu doesn't send its intermediate TLS certificate (browsers cope, strict clients like
+          # lychee/curl don't), so it's skipped. LinkedIn blocks bots (HTTP 999), and umich.edu/Stack Overflow/X often
+          # block or rate-limit CI, hence the extra accepted status codes.
           args: >-
             --root-dir ${{ github.workspace }}
             --exclude-loopback
@@ -34,8 +60,5 @@ jobs:
             --exclude '^https://web\.eecs\.umich\.edu/'
             --accept 200..=299,403,429,999
             --no-progress
-            index.html 404.html README.md
+            index.html 404.html README.md resume-links.txt
           fail: true
-
-      - name: Check the CV (served from another repo)
-        run: curl --fail --silent --show-error --location --head --output /dev/null https://santi.uy/resume/main.pdf
