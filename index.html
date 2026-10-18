@@ -11,12 +11,6 @@
   <script>
     // Only load Google Analytics on the deployed site (not on localhost or file://).
     if (document.location.hostname === "santi.uy") {
-      const gaScript = document.createElement("script");
-      gaScript.async = true;
-      // noinspection SpellCheckingInspection
-      gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-2GEKPMQP8F";
-      document.head.appendChild(gaScript);
-
       window.dataLayer = window.dataLayer || [];
       window.gtag = function () {
         dataLayer.push(arguments);
@@ -26,6 +20,20 @@
 
       // noinspection SpellCheckingInspection
       gtag('config', 'G-2GEKPMQP8F');
+
+      const loadGa = () => {
+        const gaScript = document.createElement("script");
+        gaScript.async = true;
+        // noinspection SpellCheckingInspection
+        gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-2GEKPMQP8F";
+        document.head.appendChild(gaScript);
+      };
+
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(loadGa);
+      } else {
+        setTimeout(loadGa, 1);
+      }
     }
   </script>
 
