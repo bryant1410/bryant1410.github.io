@@ -7,6 +7,12 @@
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#bd5d38">
 
+  <script>
+    if (/^\/(resume|cv)\.pdf$/i.test(location.pathname)) {
+      location.replace("/resume/main.pdf");
+    }
+  </script>
+
   <title>Page not found · Santiago Castro</title>
 
   <!-- Absolute paths: GitHub Pages serves this page at any missing URL, at any depth. -->

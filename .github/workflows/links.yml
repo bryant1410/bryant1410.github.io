@@ -55,10 +55,10 @@ jobs:
           args: >-
             --root-dir ${{ github.workspace }}
             --exclude-loopback
-            --exclude 'resume/main\.pdf$'
+            --exclude '/?resume/main\.pdf$'
             --exclude '^https://fonts\.(googleapis|gstatic)\.com/?$'
             --exclude '^https://web\.eecs\.umich\.edu/'
             --accept 200..=299,403,429,999
             --no-progress
-            index.html 404.html README.md resume-links.txt
+            index.html cv.html 404.html README.md resume-links.txt
           fail: true
