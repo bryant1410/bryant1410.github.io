@@ -1,0 +1,41 @@
+name: Check links
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 12 * * 1"  # Weekly, Mondays at 12:00 UTC.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Relative links are checked against the checked-out files (`--root-dir` resolves root-relative ones like
+          # "/favicon.ico" in 404.html). The CV is served from a separate repo, so it's checked in the next step.
+          # The bare Google Fonts origins are `preconnect` hints, not pages. web.eecs.umich.edu doesn't send its
+          # intermediate TLS certificate (browsers cope, strict clients like lychee/curl don't), so it's skipped.
+          # LinkedIn blocks bots (HTTP 999), and umich.edu/Stack Overflow/X often block or rate-limit CI, hence the
+          # extra accepted status codes.
+          args: >-
+            --root-dir ${{ github.workspace }}
+            --exclude-loopback
+            --exclude 'resume/main\.pdf$'
+            --exclude '^https://fonts\.(googleapis|gstatic)\.com/?$'
+            --exclude '^https://web\.eecs\.umich\.edu/'
+            --accept 200..=299,403,429,999
+            --no-progress
+            index.html 404.html README.md
+          fail: true
+
+      - name: Check the CV (served from another repo)
+        run: curl --fail --silent --show-error --location --head --output /dev/null https://santi.uy/resume/main.pdf
