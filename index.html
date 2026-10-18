@@ -324,7 +324,10 @@
 <main class="intro">
   <div class="intro-inner">
     <div class="profile-rail" aria-hidden="true">
-      <img class="profile-photo" src="img/profile.jpg" width="160" height="160" fetchpriority="high" alt="">
+      <picture>
+        <source srcset="img/profile-160.avif 1x, img/profile-320.avif 2x" type="image/avif">
+        <img class="profile-photo" src="img/profile.jpg" width="160" height="160" fetchpriority="high" alt="">
+      </picture>
     </div>
     <h1 class="name">
       Santiago <span class="text-primary">Castro</span>
