@@ -5,8 +5,8 @@
 # Usage: scripts/update-opengraph.sh
 #
 # Requires Google Chrome or Chromium; set $CHROME to use a specific binary. If oxipng, optipng, or ImageMagick is
-# installed, it's used to strip metadata and shrink the PNG. The page is rendered from the local file, so Google
-# Analytics doesn't load (it only does on santi.uy), but the web fonts are fetched, so an internet connection is needed.
+# installed, it's used to strip metadata and shrink the PNG. The page and its fonts are loaded from local files, so no
+# internet connection is needed and Google Analytics doesn't load (it only does on santi.uy).
 #
 # The size must match the og:image:width/height meta tags in index.html.
 

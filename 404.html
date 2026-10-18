@@ -19,12 +19,26 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mulish&family=Saira+Extra+Condensed:wght@700&display=swap"
-        rel="stylesheet">
+  <link rel="preload" href="/fonts/saira-extra-condensed-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/mulish-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 
   <style>
+    @font-face {
+      font-family: 'Mulish';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('/fonts/mulish-latin-400.woff2') format('woff2');
+    }
+
+    @font-face {
+      font-family: 'Saira Extra Condensed';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('/fonts/saira-extra-condensed-latin-700.woff2') format('woff2');
+    }
+
     :root {
       --primary-color: #bd5d38;
       --secondary-color: #824027;
