@@ -93,6 +93,9 @@
     :root {
       --primary-color: #bd5d38;
       --secondary-color: #824027;
+      /* Slightly darker than --primary-color so body-text links reach WCAG AA (4.65:1 on white). */
+      --link-color: #b85934;
+      --rail-height-mobile: 27px;
     }
 
     *,
@@ -107,7 +110,7 @@
       font-size: 1rem;
       line-height: 1.5;
       color: #6c757d;
-      padding-top: 27px;
+      padding-top: var(--rail-height-mobile);
     }
 
     @media (min-width: 992px) {
@@ -118,7 +121,7 @@
     }
 
     a {
-      color: var(--primary-color);
+      color: var(--link-color);
     }
 
     a:hover, a:focus, a:active {
@@ -131,8 +134,9 @@
       font-weight: 700;
       text-transform: uppercase;
       color: #343a40;
-      font-size: 6rem;
-      line-height: 5.5rem;
+      /* Shrinks on very narrow screens so "SANTIAGO" (~3em wide) always fits. */
+      font-size: clamp(3rem, calc((100vw - 2rem) / 3.1), 6rem);
+      line-height: 0.92;
     }
 
     p {
@@ -146,7 +150,8 @@
 
     code {
       font-family: monospace;
-      color: #c0c6cc;
+      /* Was #c0c6cc (1.72:1); this matches the body text and passes WCAG AA (4.69:1). */
+      color: #6c757d;
     }
 
     /*
@@ -159,7 +164,7 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 27px;
+      height: var(--rail-height-mobile);
       z-index: 1030;
       background-color: var(--primary-color);
     }
@@ -171,8 +176,9 @@
     @media (min-width: 992px) {
       .profile-rail {
         right: auto;
+        bottom: 0;
         width: 17rem;
-        height: 100vh;
+        height: auto;
         /* Extra bottom padding lifts the centered photo above the middle,
            matching the original layout. */
         padding: 0.5rem 0.5rem 15.5rem;
@@ -197,7 +203,8 @@
 
     @media (min-width: 768px) {
       .intro {
-        min-height: 100vh;
+        /* The body has a top padding for the mobile rail below 992px. */
+        min-height: calc(100vh - var(--rail-height-mobile));
       }
     }
 
@@ -279,9 +286,15 @@
       margin-right: 0;
     }
 
-    .social-icons a:hover {
+    .social-icons a:hover,
+    .social-icons a:focus-visible {
       color: #fff;
       background-color: var(--primary-color);
+    }
+
+    .social-icons a:focus-visible {
+      outline: 2px solid var(--secondary-color);
+      outline-offset: 2px;
     }
 
     .social-icons a svg {
