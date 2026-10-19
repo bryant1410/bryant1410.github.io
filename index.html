@@ -145,9 +145,6 @@
       --photo-ring-color: rgba(189, 93, 56, 0.22);
       --icon-bg-color: #495057;
       --icon-color: #fff;
-      --toggle-bg-color: rgba(73, 80, 87, 0.1);
-      --toggle-border-color: rgba(73, 80, 87, 0.3);
-      --toggle-color: #495057;
     }
 
     *,
@@ -402,30 +399,30 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 2.25rem;
-      height: 2.25rem;
+      width: 2rem;
+      height: 2rem;
       padding: 0;
-      border: 1px solid var(--toggle-border-color);
+      border: none;
       border-radius: 50%;
-      background-color: var(--toggle-bg-color);
-      color: var(--toggle-color);
+      background-color: transparent;
+      color: var(--text-color);
+      opacity: 0.55;
       cursor: pointer;
+      transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease;
     }
 
     @media (min-width: 600px) {
       .theme-toggle {
-        top: 1.25rem;
-        right: 1.25rem;
-        width: 2.5rem;
-        height: 2.5rem;
+        top: 1rem;
+        right: 1rem;
       }
     }
 
     .theme-toggle:hover,
     .theme-toggle:focus-visible {
-      background-color: var(--primary-color);
-      border-color: var(--primary-color);
-      color: #fff;
+      opacity: 1;
+      color: var(--heading-color);
+      background-color: rgba(108, 117, 125, 0.12);
     }
 
     .theme-toggle:focus-visible {
@@ -435,8 +432,8 @@
 
     .theme-toggle svg {
       display: none;
-      width: 1.1rem;
-      height: 1.1rem;
+      width: 1rem;
+      height: 1rem;
       fill: currentColor;
     }
 
@@ -458,9 +455,6 @@
         --photo-ring-color: rgba(224, 122, 82, 0.35);
         --icon-bg-color: #343a40;
         --icon-color: #e9ecef;
-        --toggle-bg-color: rgba(233, 236, 239, 0.1);
-        --toggle-border-color: rgba(233, 236, 239, 0.3);
-        --toggle-color: #e9ecef;
       }
     }
 
@@ -476,9 +470,6 @@
         --photo-ring-color: rgba(224, 122, 82, 0.35);
         --icon-bg-color: #343a40;
         --icon-color: #e9ecef;
-        --toggle-bg-color: rgba(233, 236, 239, 0.1);
-        --toggle-border-color: rgba(233, 236, 239, 0.3);
-        --toggle-color: #e9ecef;
       }
     }
 
