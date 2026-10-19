@@ -146,12 +146,6 @@
       color: #6c757d;
     }
 
-    @media (min-width: 992px) {
-      body {
-        padding-left: 17rem;
-      }
-    }
-
     a {
       color: var(--link-color);
     }
@@ -209,7 +203,7 @@
       align-items: center;
     }
 
-    @media (min-width: 600px) and (max-width: 991.98px) {
+    @media (min-width: 600px) {
       .intro {
         max-width: 46rem;
         margin: 0 auto;
@@ -285,6 +279,10 @@
     }
 
     @media (min-width: 992px) {
+      body {
+        padding-left: 17rem;
+      }
+
       /* Fixed 17rem left orange sidebar column on desktop. */
       body::before {
         content: "";
@@ -298,7 +296,9 @@
       }
 
       .intro {
+        max-width: 75rem;
         min-height: 100vh;
+        margin: 0;
         padding: 3rem;
       }
 
