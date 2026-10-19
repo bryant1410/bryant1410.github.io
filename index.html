@@ -662,42 +662,6 @@
   <svg data-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm0 16a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1zm9-7a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2h2zM5 11a1 1 0 1 1 0 2H3a1 1 0 1 1 0-2h2zm13.36-6.36a1 1 0 0 1 0 1.41l-1.41 1.42a1 1 0 1 1-1.42-1.42l1.42-1.41a1 1 0 0 1 1.41 0zM7.05 16.95a1 1 0 0 1 0 1.41l-1.41 1.42a1 1 0 1 1-1.42-1.42l1.42-1.41a1 1 0 0 1 1.41 0zm11.31 1.41a1 1 0 0 1-1.41 0l-1.42-1.41a1 1 0 1 1 1.42-1.42l1.41 1.42a1 1 0 0 1 0 1.41zM7.05 7.05a1 1 0 0 1-1.41 0L4.22 5.64a1 1 0 1 1 1.42-1.42l1.41 1.42a1 1 0 0 1 0 1.41z"/></svg>
   <svg data-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
 </button>
-<script>
-  (() => {
-    const root = document.documentElement;
-    const btn = document.querySelector(".theme-toggle");
-    const labels = {
-      system: ["Theme: System (switch to Light)", "Theme: System (click for Light)"],
-      light: ["Theme: Light (switch to Dark)", "Theme: Light (click for Dark)"],
-      dark: ["Theme: Dark (switch to System)", "Theme: Dark (click for System)"],
-    };
-    const syncLabel = () => {
-      const current = root.dataset.theme || "system";
-      const [ariaLabel, title] = labels[current] || labels.system;
-      btn.setAttribute("aria-label", ariaLabel);
-      btn.setAttribute("data-tooltip", title);
-    };
-    syncLabel();
-    btn.addEventListener("click", () => {
-      const current = root.dataset.theme || "system";
-      const next = current === "system" ? "light" : current === "light" ? "dark" : "system";
-      if (next === "system") {
-        delete root.dataset.theme;
-        try {
-          localStorage.removeItem("theme");
-        } catch {
-        }
-      } else {
-        root.dataset.theme = next;
-        try {
-          localStorage.setItem("theme", next);
-        } catch {
-        }
-      }
-      syncLabel();
-    });
-  })();
-</script>
 
 <main class="intro">
   <div class="intro-inner">
@@ -747,6 +711,79 @@
   </div>
 </main>
 
+<script>
+  (() => {
+    const root = document.documentElement;
+    const btn = document.querySelector(".theme-toggle");
+    const labels = {
+      system: ["Theme: System (switch to Light)", "Theme: System (click for Light)"],
+      light: ["Theme: Light (switch to Dark)", "Theme: Light (click for Dark)"],
+      dark: ["Theme: Dark (switch to System)", "Theme: Dark (click for System)"],
+    };
+    const touchMql = window.matchMedia("(hover: none)");
+    const syncTooltips = () => {
+      const isTouch = touchMql.matches;
+      document.querySelectorAll("[data-tooltip]").forEach((el) => {
+        if (isTouch) {
+          el.title = el.getAttribute("data-tooltip");
+        } else {
+          el.removeAttribute("title");
+        }
+      });
+    };
+    const syncLabel = () => {
+      const current = root.dataset.theme || "system";
+      const [ariaLabel, title] = labels[current] || labels.system;
+      btn.setAttribute("aria-label", ariaLabel);
+      btn.setAttribute("data-tooltip", title);
+      if (touchMql.matches) {
+        btn.title = title;
+      }
+    };
+    syncLabel();
+    syncTooltips();
+    if (touchMql.addEventListener) {
+      touchMql.addEventListener("change", () => {
+        syncTooltips();
+        syncLabel();
+      });
+    }
+    document.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch" && e.target && e.target.closest) {
+        const target = e.target.closest("[data-tooltip]");
+        if (target && !target.title) {
+          target.title = target.getAttribute("data-tooltip") || "";
+        }
+      }
+    }, { passive: true });
+    document.addEventListener("pointerover", (e) => {
+      if (e.pointerType === "mouse" && !touchMql.matches && e.target && e.target.closest) {
+        const target = e.target.closest("[data-tooltip]");
+        if (target && target.hasAttribute("title")) {
+          target.removeAttribute("title");
+        }
+      }
+    }, { passive: true });
+    btn.addEventListener("click", () => {
+      const current = root.dataset.theme || "system";
+      const next = current === "system" ? "light" : current === "light" ? "dark" : "system";
+      if (next === "system") {
+        delete root.dataset.theme;
+        try {
+          localStorage.removeItem("theme");
+        } catch {
+        }
+      } else {
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem("theme", next);
+        } catch {
+        }
+      }
+      syncLabel();
+    });
+  })();
+</script>
 </body>
 
 </html>
