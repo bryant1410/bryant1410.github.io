@@ -21,26 +21,28 @@ jobs:
         run: |
           curl --fail --silent --show-error --location https://santi.uy/resume/main.pdf --output /tmp/resume.pdf
           python3 - <<'PY'
-          import pathlib, re, sys, zlib
+          import re, sys, zlib
 
-          data = pathlib.Path("/tmp/resume.pdf").read_bytes()
+          with open("/tmp/resume.pdf", "rb") as f:
+              data = f.read()
           chunks = [data]
-          for match in re.finditer(rb"stream\r?\n(.*?)\r?\nendstream", data, re.S):
+          for match in re.finditer(rb"stream\s+(.*?)\s+endstream", data, re.S):
               try:
                   chunks.append(zlib.decompress(match.group(1)))
               except zlib.error:
                   pass
 
-          uris = sorted({
+          links = sorted({
               re.sub(rb"\\([()\\])", rb"\1", u).decode("utf-8", "replace")
               for chunk in chunks
               for u in re.findall(rb"/URI\s*\(((?:\\.|[^\\()])*)\)", chunk)
           })
-          if not uris:
+          if not links:
               sys.exit("No /URI links found in resume/main.pdf")
 
-          pathlib.Path("resume-links.txt").write_text("\n".join(uris) + "\n", encoding="utf-8")
-          print(f"Extracted {len(uris)} unique links from resume/main.pdf")
+          with open("resume-links.txt", "w", encoding="utf-8") as f:
+              f.write("\n".join(links) + "\n")
+          print(f"Extracted {len(links)} unique links from resume/main.pdf")
           PY
 
       - name: Check links
