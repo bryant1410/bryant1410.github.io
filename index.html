@@ -130,7 +130,6 @@
       --secondary-color: #824027;
       /* Slightly darker than --primary-color so body-text links reach WCAG AA (4.65:1 on white). */
       --link-color: #b85934;
-      --rail-height-mobile: 0px;
     }
 
     *,
@@ -145,12 +144,10 @@
       font-size: 1rem;
       line-height: 1.5;
       color: #6c757d;
-      padding-top: var(--rail-height-mobile);
     }
 
     @media (min-width: 992px) {
       body {
-        padding-top: 0;
         padding-left: 17rem;
       }
     }
@@ -189,21 +186,6 @@
       color: #6c757d;
     }
 
-    /*
-     * Decorative orange rail: on mobile/tablet, a thin top accent bar; on
-     * desktop, the fixed 17rem left sidebar column.
-     */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: var(--rail-height-mobile);
-      z-index: 1030;
-      background-color: var(--primary-color);
-    }
-
     .profile-rail {
       grid-column: 1;
       grid-row: 1 / span 2;
@@ -221,7 +203,7 @@
 
     .intro {
       max-width: 75rem;
-      min-height: calc(100svh - var(--rail-height-mobile));
+      min-height: 100svh;
       padding: 1.5rem 1.25rem 8vh;
       display: flex;
       align-items: center;
@@ -277,11 +259,16 @@
     }
 
     @media (min-width: 992px) {
+      /* Fixed 17rem left orange sidebar column on desktop. */
       body::before {
-        right: auto;
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
         bottom: 0;
         width: 17rem;
-        height: auto;
+        z-index: 1030;
+        background-color: var(--primary-color);
       }
 
       .intro {
