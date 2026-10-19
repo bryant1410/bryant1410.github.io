@@ -169,8 +169,8 @@
       font-weight: 700;
       text-transform: uppercase;
       color: #343a40;
-      /* Scales alongside the mobile/tablet photo so "SANTIAGO" always fits. */
-      font-size: clamp(2.5rem, calc((100vw - 9.5rem) / 2.9), 4.75rem);
+      /* Scales to fit the width remaining beside the photo + gap + padding. */
+      font-size: clamp(2.5rem, calc((100vw - 3.25rem - clamp(6rem, 25vw, 9rem)) / 3.15), 4.75rem);
       line-height: 0.92;
     }
 
@@ -212,9 +212,9 @@
 
     .profile-photo {
       display: block;
-      width: clamp(6rem, 26vw, 9rem);
-      height: clamp(6rem, 26vw, 9rem);
-      max-width: 100%;
+      width: clamp(6rem, 25vw, 9rem);
+      height: auto;
+      aspect-ratio: 1;
       border-radius: 50%;
     }
 
