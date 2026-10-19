@@ -220,15 +220,16 @@
 
     .intro {
       max-width: 75rem;
-      padding: 1rem;
+      min-height: calc(100vh - var(--rail-height-mobile));
+      min-height: calc(100svh - var(--rail-height-mobile));
+      padding: 1.5rem 1.25rem 8vh;
       display: flex;
       align-items: center;
     }
 
     @media (min-width: 768px) {
       .intro {
-        /* The body has a top padding for the mobile rail below 992px. */
-        min-height: calc(100vh - var(--rail-height-mobile));
+        padding: 2.5rem;
       }
     }
 
