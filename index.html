@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
 
   <link rel="preload" href="fonts/saira-extra-condensed-latin-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/mulish-latin-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -158,6 +159,7 @@
     }
 
     :root {
+      color-scheme: light dark;
       --primary-color: #bd5d38;
       --secondary-color: #824027;
       /* Slightly darker than --primary-color so body-text links reach WCAG AA (4.65:1 on white). */
@@ -480,6 +482,7 @@
 
     @media screen and (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
+        color-scheme: dark;
         --primary-color: #d46b43;
         --secondary-color: #f09573;
         --link-color: #e07a52;
@@ -497,7 +500,12 @@
     }
 
     @media screen {
+      :root[data-theme="light"] {
+        color-scheme: light;
+      }
+
       :root[data-theme="dark"] {
+        color-scheme: dark;
         --primary-color: #d46b43;
         --secondary-color: #f09573;
         --link-color: #e07a52;
@@ -607,17 +615,46 @@
     }
 
     .social-icons a[data-tooltip]:focus-visible::before,
-    .social-icons a[data-tooltip]:focus-visible::after {
+    .social-icons a[data-tooltip]:focus-visible::after,
+    .social-icons a[data-tooltip][data-tooltip-active]::before,
+    .social-icons a[data-tooltip][data-tooltip-active]::after {
       opacity: 1;
       visibility: visible;
       transform: translateX(-50%) translateY(0);
     }
 
     .theme-toggle[data-tooltip]:focus-visible::before,
-    .theme-toggle[data-tooltip]:focus-visible::after {
+    .theme-toggle[data-tooltip]:focus-visible::after,
+    .theme-toggle[data-tooltip][data-tooltip-active]::before,
+    .theme-toggle[data-tooltip][data-tooltip-active]::after {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
+    }
+
+    @media (max-width: 480px) {
+      .social-icons a:first-child[data-tooltip]::before {
+        left: 0;
+        transform: translateY(4px);
+      }
+
+      .social-icons a:first-child[data-tooltip]:hover::before,
+      .social-icons a:first-child[data-tooltip]:focus-visible::before,
+      .social-icons a:first-child[data-tooltip][data-tooltip-active]::before {
+        transform: translateY(0);
+      }
+
+      .social-icons a:last-child[data-tooltip]::before {
+        left: auto;
+        right: 0;
+        transform: translateY(4px);
+      }
+
+      .social-icons a:last-child[data-tooltip]:hover::before,
+      .social-icons a:last-child[data-tooltip]:focus-visible::before,
+      .social-icons a:last-child[data-tooltip][data-tooltip-active]::before {
+        transform: translateY(0);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -723,50 +760,82 @@
       light: ["Theme: Light (switch to Dark)", "Theme: Light (click for Dark)"],
       dark: ["Theme: Dark (switch to System)", "Theme: Dark (click for System)"],
     };
-    const touchMql = window.matchMedia("(hover: none)");
-    const syncTooltips = () => {
-      const isTouch = touchMql.matches;
-      document.querySelectorAll("[data-tooltip]").forEach((el) => {
-        if (isTouch) {
-          el.title = el.getAttribute("data-tooltip");
-        } else {
-          el.removeAttribute("title");
-        }
-      });
-    };
     const syncLabel = () => {
       const current = root.dataset.theme || "system";
       const [ariaLabel, title] = labels[current] || labels.system;
       btn.setAttribute("aria-label", ariaLabel);
       btn.setAttribute("data-tooltip", title);
-      if (touchMql.matches) {
-        btn.title = title;
-      }
     };
     syncLabel();
-    syncTooltips();
-    if (touchMql.addEventListener) {
-      touchMql.addEventListener("change", () => {
-        syncTooltips();
-        syncLabel();
-      });
-    }
+
+    let pressTimer = null;
+    let activeTooltipEl = null;
+    let didLongPress = false;
+
+    const clearPressTimer = () => {
+      if (pressTimer) {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+      }
+    };
+
+    const hideActiveTooltip = () => {
+      clearPressTimer();
+      if (activeTooltipEl) {
+        delete activeTooltipEl.dataset.tooltipActive;
+        activeTooltipEl = null;
+      }
+    };
+
     document.addEventListener("pointerdown", (e) => {
-      if (e.pointerType === "touch" && e.target && e.target.closest) {
-        const target = e.target.closest("[data-tooltip]");
-        if (target && !target.title) {
-          target.title = target.getAttribute("data-tooltip") || "";
-        }
+      if (e.pointerType !== "touch") {
+        return;
+      }
+      const target = e.target && e.target.closest ? e.target.closest("[data-tooltip]") : null;
+      if (!target) {
+        hideActiveTooltip();
+        return;
+      }
+      hideActiveTooltip();
+      didLongPress = false;
+      pressTimer = setTimeout(() => {
+        didLongPress = true;
+        activeTooltipEl = target;
+        target.dataset.tooltipActive = "";
+      }, 350);
+    }, { passive: true });
+
+    document.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch" && pressTimer && !didLongPress) {
+        clearPressTimer();
       }
     }, { passive: true });
-    document.addEventListener("pointerover", (e) => {
-      if (e.pointerType === "mouse" && !touchMql.matches && e.target && e.target.closest) {
-        const target = e.target.closest("[data-tooltip]");
-        if (target && target.hasAttribute("title")) {
-          target.removeAttribute("title");
+
+    const handlePointerEnd = (e) => {
+      if (e.pointerType === "touch") {
+        clearPressTimer();
+        if (activeTooltipEl) {
+          setTimeout(hideActiveTooltip, 120);
         }
       }
-    }, { passive: true });
+    };
+
+    document.addEventListener("pointerup", handlePointerEnd, { passive: true });
+    document.addEventListener("pointercancel", handlePointerEnd, { passive: true });
+
+    document.addEventListener("click", (e) => {
+      if (didLongPress) {
+        e.preventDefault();
+        e.stopPropagation();
+        didLongPress = false;
+      }
+    }, true);
+
+    document.addEventListener("contextmenu", (e) => {
+      if (didLongPress && e.target && e.target.closest && e.target.closest("[data-tooltip]")) {
+        e.preventDefault();
+      }
+    });
     btn.addEventListener("click", () => {
       const current = root.dataset.theme || "system";
       const next = current === "system" ? "light" : current === "light" ? "dark" : "system";

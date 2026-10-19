@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#bd5d38">
 
@@ -71,6 +72,7 @@
     }
 
     :root {
+      color-scheme: light dark;
       --primary-color: #bd5d38;
       --secondary-color: #824027;
       --link-color: #b85934;
@@ -177,6 +179,7 @@
 
     @media screen and (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
+        color-scheme: dark;
         --primary-color: #d46b43;
         --secondary-color: #f09573;
         --link-color: #e07a52;
@@ -189,7 +192,12 @@
     }
 
     @media screen {
+      :root[data-theme="light"] {
+        color-scheme: light;
+      }
+
       :root[data-theme="dark"] {
+        color-scheme: dark;
         --primary-color: #d46b43;
         --secondary-color: #f09573;
         --link-color: #e07a52;
@@ -248,7 +256,9 @@
     }
 
     .theme-toggle[data-tooltip]:focus-visible::before,
-    .theme-toggle[data-tooltip]:focus-visible::after {
+    .theme-toggle[data-tooltip]:focus-visible::after,
+    .theme-toggle[data-tooltip][data-tooltip-active]::before,
+    .theme-toggle[data-tooltip][data-tooltip-active]::after {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
@@ -286,6 +296,67 @@
       btn.setAttribute("data-tooltip", title);
     };
     syncLabel();
+
+    let pressTimer = null;
+    let didLongPress = false;
+
+    const clearPressTimer = () => {
+      if (pressTimer) {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+      }
+    };
+
+    const hideTooltip = () => {
+      clearPressTimer();
+      delete btn.dataset.tooltipActive;
+    };
+
+    document.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "touch") {
+        return;
+      }
+      if (e.target && e.target.closest && e.target.closest(".theme-toggle")) {
+        hideTooltip();
+        didLongPress = false;
+        pressTimer = setTimeout(() => {
+          didLongPress = true;
+          btn.dataset.tooltipActive = "";
+        }, 350);
+      } else {
+        hideTooltip();
+      }
+    }, { passive: true });
+
+    document.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch" && pressTimer && !didLongPress) {
+        clearPressTimer();
+      }
+    }, { passive: true });
+
+    const handlePointerEnd = (e) => {
+      if (e.pointerType === "touch") {
+        clearPressTimer();
+        setTimeout(hideTooltip, 120);
+      }
+    };
+
+    document.addEventListener("pointerup", handlePointerEnd, { passive: true });
+    document.addEventListener("pointercancel", handlePointerEnd, { passive: true });
+
+    document.addEventListener("click", (e) => {
+      if (didLongPress) {
+        e.preventDefault();
+        e.stopPropagation();
+        didLongPress = false;
+      }
+    }, true);
+
+    document.addEventListener("contextmenu", (e) => {
+      if (didLongPress && e.target && e.target.closest && e.target.closest(".theme-toggle")) {
+        e.preventDefault();
+      }
+    });
     btn.addEventListener("click", () => {
       const current = root.dataset.theme || "system";
       const next = current === "system" ? "light" : current === "light" ? "dark" : "system";
