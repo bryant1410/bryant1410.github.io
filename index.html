@@ -276,6 +276,30 @@
       margin-bottom: 1.5rem;
     }
 
+    @media (min-width: 768px) {
+      .intro-inner {
+        column-gap: 1.5rem;
+      }
+
+      .profile-rail {
+        margin: 0 0 2rem;
+      }
+
+      h1 {
+        /* Scales the 1-line tablet title so title + handle balances the 9rem photo. */
+        font-size: clamp(4.75rem, 10.5vw, 5.5rem);
+      }
+
+      .subheading {
+        margin: 0.2rem 0 2rem;
+        font-size: 1.25rem;
+      }
+
+      .lead-last {
+        margin-bottom: 2.25rem;
+      }
+    }
+
     @media (min-width: 992px) {
       body::before {
         right: auto;
