@@ -375,6 +375,40 @@
       outline-offset: 2px;
     }
 
+    @media screen and (prefers-color-scheme: dark) {
+      :root {
+        --primary-color: #d46b43;
+        --secondary-color: #f09573;
+        --link-color: #e07a52;
+      }
+
+      body {
+        background-color: #181a1b;
+        color: #b0b8c0;
+      }
+
+      body::before {
+        background-color: #9e4b2b;
+      }
+
+      h1 {
+        color: #f1f3f5;
+      }
+
+      code {
+        color: #b0b8c0;
+      }
+
+      .profile-photo {
+        border-color: rgba(224, 122, 82, 0.35);
+      }
+
+      .social-icons a {
+        background-color: #2b3035;
+        color: #e9ecef;
+      }
+    }
+
     .social-icons a svg {
       width: auto;
       height: 38.5%;

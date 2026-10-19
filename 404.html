@@ -86,6 +86,23 @@
     a:hover, a:focus, a:active {
       color: var(--secondary-color);
     }
+
+    @media screen and (prefers-color-scheme: dark) {
+      :root {
+        --primary-color: #d46b43;
+        --secondary-color: #f09573;
+        --link-color: #e07a52;
+      }
+
+      body {
+        background-color: #181a1b;
+        color: #b0b8c0;
+      }
+
+      h1 {
+        color: #f1f3f5;
+      }
+    }
   </style>
 </head>
 
