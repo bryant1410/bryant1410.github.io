@@ -386,6 +386,32 @@
     .social-icons a svg.cv {
       height: 28.5%;
     }
+
+    @media print {
+      body {
+        padding-left: 0;
+      }
+
+      body::before {
+        display: none;
+      }
+
+      .intro {
+        max-width: none;
+        min-height: auto;
+        padding: 0;
+      }
+
+      .intro-inner {
+        display: grid;
+      }
+
+      .profile-rail {
+        position: static;
+        width: auto;
+        margin: 0 0 2rem;
+      }
+    }
   </style>
 </head>
 
