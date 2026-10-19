@@ -9,6 +9,9 @@ build step. To preview it locally, open `index.html` in a browser or run `python
 After changing how the page looks, regenerate the link-preview image ([`img/opengraph.png`](img/opengraph.png)) with
 [`scripts/update-opengraph.sh`](scripts/update-opengraph.sh) (needs Chrome or Chromium).
 
+To run all code, markup, workflow, and accessibility linters locally, run
+[`scripts/lint.sh`](scripts/lint.sh).
+
 The design was originally based on
 [Start Bootstrap - Resume](https://github.com/StartBootstrap/startbootstrap-resume). Brand icons are from
 [Font Awesome Free](https://fontawesome.com) (CC BY 4.0).

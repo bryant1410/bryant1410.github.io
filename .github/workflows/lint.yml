@@ -1,0 +1,40 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: ShellCheck
+        run: shellcheck scripts/*.sh
+
+      - name: HTML Validate
+        run: npx --yes html-validate index.html 404.html cv.html
+
+      - name: Markdownlint
+        run: npx --yes markdownlint-cli README.md
+
+      - name: Actionlint
+        run: |
+          bash <(curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.7.12
+          ./actionlint -color
+
+      - name: Pa11y (Accessibility)
+        run: |
+          npx --yes pa11y "file://${GITHUB_WORKSPACE}/index.html"
+          npx --yes pa11y "file://${GITHUB_WORKSPACE}/404.html"
