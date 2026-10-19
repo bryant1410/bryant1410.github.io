@@ -190,9 +190,8 @@
     }
 
     /*
-     * Decorative profile rail: on mobile, body::before draws the thin top orange
-     * accent bar while .profile-rail sits in normal flow right above the heading;
-     * on desktop, .profile-rail becomes the fixed left orange column.
+     * Decorative orange rail: on mobile, a thin top accent bar; on desktop,
+     * the fixed 17rem left sidebar column.
      */
     body::before {
       content: "";
@@ -219,23 +218,21 @@
 
     @media (min-width: 992px) {
       body::before {
-        display: none;
+        right: auto;
+        bottom: 0;
+        width: 17rem;
+        height: auto;
       }
 
       .profile-rail {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
+        position: absolute;
+        /* Centers the 10rem photo against the ~7.4rem title + handle block. */
+        top: -1.3rem;
+        left: -20rem;
         width: 17rem;
+        z-index: 1031;
         margin: 0;
-        /* Extra bottom padding lifts the centered photo above the middle,
-           matching the original layout. */
-        padding: 0.5rem 0.5rem 15.5rem;
-        background-color: var(--primary-color);
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
       }
 
@@ -260,11 +257,13 @@
 
     @media (min-width: 992px) {
       .intro {
+        min-height: 100vh;
         padding: 3rem;
       }
     }
 
     .intro-inner {
+      position: relative;
       width: 100%;
     }
 
