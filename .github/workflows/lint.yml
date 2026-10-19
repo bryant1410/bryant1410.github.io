@@ -26,6 +26,30 @@ jobs:
       - name: HTML Validate
         run: npx --yes html-validate index.html 404.html cv.html
 
+      - name: JavaScript Quote Consistency
+        run: |
+          python3 - <<'EOF'
+          import re, sys
+
+          errors = 0
+          for path in ["index.html", "404.html", "cv.html"]:
+              with open(path, encoding="utf-8") as f:
+                  content = f.read()
+              scripts = re.findall(r"<script>(.*?)</script>", content, re.DOTALL)
+              for script in scripts:
+                  code = re.sub(r"/\*.*?\*/", "", script, flags=re.DOTALL)
+                  for line in code.splitlines():
+                      line_code = re.sub(r"//.*$", "", line).strip()
+                      line_code = re.sub(r'"(?:\\.|[^"\\])*"', '""', line_code)
+                      line_code = re.sub(r'/(?:\\.|[^/\\\n])+/[a-z]*', '', line_code)
+                      if "'" in line_code:
+                          print(f"{path}: expected double quotes, found single quote in: {line.strip()}")
+                          errors += 1
+
+          if errors:
+              sys.exit(1)
+          EOF
+
       - name: Markdownlint
         run: npx --yes markdownlint-cli README.md
 
