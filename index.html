@@ -404,6 +404,10 @@
     }
 
     .social-icons a {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
       position: relative;
       display: inline-flex;
       align-items: center;
@@ -429,6 +433,10 @@
     }
 
     .theme-toggle {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
       position: fixed;
       top: 0.75rem;
       right: 0.75rem;
@@ -771,6 +779,10 @@
     let pressTimer = null;
     let activeTooltipEl = null;
     let didLongPress = false;
+    let startX = 0;
+    let startY = 0;
+    let dismissTimer = null;
+    let isTouchInteraction = false;
 
     const clearPressTimer = () => {
       if (pressTimer) {
@@ -779,49 +791,86 @@
       }
     };
 
+    const clearDismissTimer = () => {
+      if (dismissTimer) {
+        clearTimeout(dismissTimer);
+        dismissTimer = null;
+      }
+    };
+
     const hideActiveTooltip = () => {
       clearPressTimer();
+      clearDismissTimer();
       if (activeTooltipEl) {
         delete activeTooltipEl.dataset.tooltipActive;
         activeTooltipEl = null;
       }
     };
 
-    document.addEventListener("pointerdown", (e) => {
-      if (e.pointerType !== "touch") {
-        return;
-      }
+    const handleTouchStart = (e) => {
+      isTouchInteraction = true;
+      const touch = e.touches ? e.touches[0] : e;
       const target = e.target && e.target.closest ? e.target.closest("[data-tooltip]") : null;
       if (!target) {
         hideActiveTooltip();
         return;
       }
-      hideActiveTooltip();
+      if (activeTooltipEl && activeTooltipEl !== target) {
+        hideActiveTooltip();
+      }
+      clearPressTimer();
+      clearDismissTimer();
       didLongPress = false;
+      startX = touch.clientX;
+      startY = touch.clientY;
       pressTimer = setTimeout(() => {
         didLongPress = true;
         activeTooltipEl = target;
         target.dataset.tooltipActive = "";
-      }, 350);
-    }, { passive: true });
+      }, 300);
+    };
 
-    document.addEventListener("pointermove", (e) => {
-      if (e.pointerType === "touch" && pressTimer && !didLongPress) {
-        clearPressTimer();
-      }
-    }, { passive: true });
-
-    const handlePointerEnd = (e) => {
-      if (e.pointerType === "touch") {
-        clearPressTimer();
-        if (activeTooltipEl) {
-          setTimeout(hideActiveTooltip, 120);
+    const handleTouchMove = (e) => {
+      if (pressTimer && !didLongPress) {
+        const touch = e.touches ? e.touches[0] : e;
+        const moveX = Math.abs(touch.clientX - startX);
+        const moveY = Math.abs(touch.clientY - startY);
+        if (moveX > 10 || moveY > 10) {
+          clearPressTimer();
         }
       }
     };
 
-    document.addEventListener("pointerup", handlePointerEnd, { passive: true });
-    document.addEventListener("pointercancel", handlePointerEnd, { passive: true });
+    const handleTouchEnd = () => {
+      clearPressTimer();
+      if (didLongPress && activeTooltipEl) {
+        clearDismissTimer();
+        dismissTimer = setTimeout(hideActiveTooltip, 2000);
+      }
+    };
+
+    document.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "mouse") {
+        isTouchInteraction = false;
+        return;
+      }
+      handleTouchStart(e);
+    }, { passive: true });
+
+    document.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "mouse") {
+        return;
+      }
+      handleTouchMove(e);
+    }, { passive: true });
+
+    document.addEventListener("pointerup", handleTouchEnd, { passive: true });
+    document.addEventListener("pointercancel", () => {
+      clearPressTimer();
+      if (!didLongPress) {
+        hideActiveTooltip();
+      }
+    }, { passive: true });
 
     document.addEventListener("click", (e) => {
       if (didLongPress) {
@@ -832,7 +881,7 @@
     }, true);
 
     document.addEventListener("contextmenu", (e) => {
-      if (didLongPress && e.target && e.target.closest && e.target.closest("[data-tooltip]")) {
+      if (isTouchInteraction && e.target && e.target.closest && e.target.closest("[data-tooltip]")) {
         e.preventDefault();
       }
     });
