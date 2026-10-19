@@ -169,8 +169,8 @@
       font-weight: 700;
       text-transform: uppercase;
       color: #343a40;
-      /* Shrinks on very narrow screens so "SANTIAGO" (~3em wide) always fits. */
-      font-size: clamp(3rem, calc((100vw - 2rem) / 3.1), 6rem);
+      /* Scales alongside the mobile/tablet photo so "SANTIAGO" always fits. */
+      font-size: clamp(2.5rem, calc((100vw - 9.5rem) / 2.9), 4.75rem);
       line-height: 0.92;
     }
 
@@ -190,8 +190,8 @@
     }
 
     /*
-     * Decorative orange rail: on mobile, a thin top accent bar; on desktop,
-     * the fixed 17rem left sidebar column.
+     * Decorative orange rail: on mobile/tablet, a thin top accent bar; on
+     * desktop, the fixed 17rem left sidebar column.
      */
     body::before {
       content: "";
@@ -205,40 +205,17 @@
     }
 
     .profile-rail {
-      margin: 0 0 0.5rem;
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      margin: 0 0 1.5rem;
     }
 
     .profile-photo {
       display: block;
-      width: 10rem;
-      height: 10rem;
+      width: clamp(6rem, 26vw, 9rem);
+      height: clamp(6rem, 26vw, 9rem);
       max-width: 100%;
       border-radius: 50%;
-    }
-
-    @media (min-width: 992px) {
-      body::before {
-        right: auto;
-        bottom: 0;
-        width: 17rem;
-        height: auto;
-      }
-
-      .profile-rail {
-        position: absolute;
-        /* Centers the 10rem photo against the ~7.4rem title + handle block. */
-        top: -1.3rem;
-        left: -20rem;
-        width: 17rem;
-        z-index: 1031;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-      }
-
-      .profile-rail .profile-photo {
-        border: 0.5rem solid rgba(255, 255, 255, 0.2);
-      }
     }
 
     .intro {
@@ -255,25 +232,37 @@
       }
     }
 
-    @media (min-width: 992px) {
-      .intro {
-        min-height: 100vh;
-        padding: 3rem;
-      }
-    }
-
+    /*
+     * Below 992px, a 2-column grid places the photo on the left of the
+     * title + handle while the bio paragraphs and icons span full width below.
+     */
     .intro-inner {
       position: relative;
       width: 100%;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 1.25rem;
+      align-items: center;
     }
 
     .name {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: end;
       margin-bottom: 0;
     }
 
     .subheading {
-      margin: 0 0 1.5rem;
-      font-size: 1.25rem;
+      grid-column: 2;
+      grid-row: 2;
+      align-self: start;
+      margin: 0.15rem 0 1.5rem;
+      font-size: 1.15rem;
+    }
+
+    .lead,
+    .social-icons {
+      grid-column: 1 / -1;
     }
 
     .lead {
@@ -287,8 +276,47 @@
     }
 
     @media (min-width: 992px) {
+      body::before {
+        right: auto;
+        bottom: 0;
+        width: 17rem;
+        height: auto;
+      }
+
+      .intro {
+        min-height: 100vh;
+        padding: 3rem;
+      }
+
+      .intro-inner {
+        display: block;
+      }
+
+      .profile-rail {
+        position: absolute;
+        /* Centers the 10rem photo against the ~7.4rem title + handle block. */
+        top: -1.3rem;
+        left: -20rem;
+        width: 17rem;
+        z-index: 1031;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      .profile-rail .profile-photo {
+        width: 10rem;
+        height: 10rem;
+        border: 0.5rem solid rgba(255, 255, 255, 0.2);
+      }
+
+      h1 {
+        font-size: 6rem;
+      }
+
       .subheading {
-        margin-bottom: 3rem;
+        margin: 0 0 3rem;
+        font-size: 1.25rem;
       }
 
       .lead-last {
@@ -296,23 +324,23 @@
       }
     }
 
+    .social-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(0.45rem, 2.2vw, 1rem);
+    }
+
     .social-icons a {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      vertical-align: middle;
-      height: 3.5rem;
-      width: 3.5rem;
-      margin-bottom: 1rem;
-      margin-right: 1rem;
+      /* Scales down slightly on <440px phones so all 6 icons fit on one row. */
+      height: clamp(2.6rem, 12.8vw, 3.5rem);
+      width: clamp(2.6rem, 12.8vw, 3.5rem);
       background-color: #495057;
       border-radius: 100%;
       color: #fff;
       text-decoration: none;
-    }
-
-    .social-icons a:last-child {
-      margin-right: 0;
     }
 
     .social-icons a:hover,
@@ -328,14 +356,14 @@
 
     .social-icons a svg {
       width: auto;
-      height: 1.35rem;
+      height: 38.5%;
       fill: currentColor;
     }
 
     /* "CV" is an outlined (text-to-path) glyph in a tight viewBox, so it
        flex-centers exactly like the brand icons; sized down a bit to match. */
     .social-icons a svg.cv {
-      height: 1rem;
+      height: 28.5%;
     }
   </style>
 </head>
