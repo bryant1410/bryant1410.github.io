@@ -36,5 +36,5 @@ jobs:
 
       - name: Pa11y (Accessibility)
         run: |
-          npx --yes pa11y "file://${GITHUB_WORKSPACE}/index.html"
-          npx --yes pa11y "file://${GITHUB_WORKSPACE}/404.html"
+          npx --yes pa11y --config .pa11y.json "file://${GITHUB_WORKSPACE}/index.html"
+          npx --yes pa11y --config .pa11y.json "file://${GITHUB_WORKSPACE}/404.html"

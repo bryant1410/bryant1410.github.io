@@ -50,8 +50,8 @@ fi
 
 echo ""
 echo "=== [5/5] pa11y (accessibility) ==="
-npx --yes pa11y "file://$repo_root/index.html"
-npx --yes pa11y "file://$repo_root/404.html"
+npx --yes pa11y --config "$repo_root/.pa11y.json" "file://$repo_root/index.html"
+npx --yes pa11y --config "$repo_root/.pa11y.json" "file://$repo_root/404.html"
 echo "✓ pa11y passed."
 
 echo ""
