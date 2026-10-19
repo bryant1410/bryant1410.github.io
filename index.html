@@ -35,6 +35,14 @@
         setTimeout(loadGa, 1);
       }
     }
+
+    try {
+      const theme = localStorage.getItem("theme");
+      if (theme === "light" || theme === "dark") {
+        document.documentElement.dataset.theme = theme;
+      }
+    } catch {
+    }
   </script>
 
   <meta name="description"
@@ -130,6 +138,16 @@
       --secondary-color: #824027;
       /* Slightly darker than --primary-color so body-text links reach WCAG AA (4.65:1 on white). */
       --link-color: #b85934;
+      --rail-color: #bd5d38;
+      --bg-color: #fff;
+      --text-color: #6c757d;
+      --heading-color: #343a40;
+      --photo-ring-color: rgba(189, 93, 56, 0.22);
+      --icon-bg-color: #495057;
+      --icon-color: #fff;
+      --toggle-bg-color: rgba(73, 80, 87, 0.08);
+      --toggle-border-color: rgba(73, 80, 87, 0.2);
+      --toggle-color: #495057;
     }
 
     *,
@@ -143,7 +161,8 @@
       font-family: 'Mulish', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
       font-size: 1rem;
       line-height: 1.5;
-      color: #6c757d;
+      background-color: var(--bg-color);
+      color: var(--text-color);
     }
 
     a {
@@ -159,7 +178,7 @@
       font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
       font-weight: 700;
       text-transform: uppercase;
-      color: #343a40;
+      color: var(--heading-color);
       /* Proportions the 2-line mobile title + handle to match the photo height. */
       font-size: clamp(2.6rem, 15.6vw, 4.75rem);
       line-height: 0.88;
@@ -177,7 +196,7 @@
     code {
       font-family: monospace;
       /* Was #c0c6cc (1.72:1); this matches the body text and passes WCAG AA (4.69:1). */
-      color: #6c757d;
+      color: var(--text-color);
     }
 
     .profile-rail {
@@ -192,13 +211,13 @@
       height: auto;
       aspect-ratio: 1;
       border-radius: 50%;
-      border: 0.25rem solid rgba(189, 93, 56, 0.22);
+      border: 0.25rem solid var(--photo-ring-color);
     }
 
     .intro {
       max-width: 75rem;
       min-height: 100svh;
-      padding: 1.5rem 1.25rem 8vh;
+      padding: 3.25rem 1.25rem 5vh;
       display: flex;
       align-items: center;
     }
@@ -292,7 +311,7 @@
         bottom: 0;
         width: 17rem;
         z-index: 1030;
-        background-color: var(--primary-color);
+        background-color: var(--rail-color);
       }
 
       .intro {
@@ -358,9 +377,9 @@
       /* Scales down slightly on <440px phones so all 6 icons fit on one row. */
       height: clamp(2.6rem, 12.8vw, 3.5rem);
       width: clamp(2.6rem, 12.8vw, 3.5rem);
-      background-color: #495057;
+      background-color: var(--icon-bg-color);
       border-radius: 100%;
-      color: #fff;
+      color: var(--icon-color);
       text-decoration: none;
     }
 
@@ -375,37 +394,91 @@
       outline-offset: 2px;
     }
 
+    .theme-toggle {
+      position: fixed;
+      top: 0.75rem;
+      right: 0.75rem;
+      z-index: 1032;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      padding: 0;
+      border: 1px solid var(--toggle-border-color);
+      border-radius: 50%;
+      background-color: var(--toggle-bg-color);
+      color: var(--toggle-color);
+      cursor: pointer;
+    }
+
+    @media (min-width: 600px) {
+      .theme-toggle {
+        top: 1.25rem;
+        right: 1.25rem;
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+
+    .theme-toggle:hover,
+    .theme-toggle:focus-visible {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      color: #fff;
+    }
+
+    .theme-toggle:focus-visible {
+      outline: 2px solid var(--secondary-color);
+      outline-offset: 2px;
+    }
+
+    .theme-toggle svg {
+      display: none;
+      width: 1.1rem;
+      height: 1.1rem;
+      fill: currentColor;
+    }
+
+    :root:not([data-theme]) .theme-toggle svg[data-icon="system"],
+    :root[data-theme="light"] .theme-toggle svg[data-icon="light"],
+    :root[data-theme="dark"] .theme-toggle svg[data-icon="dark"] {
+      display: block;
+    }
+
     @media screen and (prefers-color-scheme: dark) {
-      :root {
+      :root:not([data-theme="light"]) {
         --primary-color: #d46b43;
         --secondary-color: #f09573;
         --link-color: #e07a52;
+        --rail-color: #9e4b2b;
+        --bg-color: #181a1b;
+        --text-color: #b0b8c0;
+        --heading-color: #f1f3f5;
+        --photo-ring-color: rgba(224, 122, 82, 0.35);
+        --icon-bg-color: #2b3035;
+        --icon-color: #e9ecef;
+        --toggle-bg-color: rgba(233, 236, 239, 0.08);
+        --toggle-border-color: rgba(233, 236, 239, 0.2);
+        --toggle-color: #e9ecef;
       }
+    }
 
-      body {
-        background-color: #181a1b;
-        color: #b0b8c0;
-      }
-
-      body::before {
-        background-color: #9e4b2b;
-      }
-
-      h1 {
-        color: #f1f3f5;
-      }
-
-      code {
-        color: #b0b8c0;
-      }
-
-      .profile-photo {
-        border-color: rgba(224, 122, 82, 0.35);
-      }
-
-      .social-icons a {
-        background-color: #2b3035;
-        color: #e9ecef;
+    @media screen {
+      :root[data-theme="dark"] {
+        --primary-color: #d46b43;
+        --secondary-color: #f09573;
+        --link-color: #e07a52;
+        --rail-color: #9e4b2b;
+        --bg-color: #181a1b;
+        --text-color: #b0b8c0;
+        --heading-color: #f1f3f5;
+        --photo-ring-color: rgba(224, 122, 82, 0.35);
+        --icon-bg-color: #2b3035;
+        --icon-color: #e9ecef;
+        --toggle-bg-color: rgba(233, 236, 239, 0.08);
+        --toggle-border-color: rgba(233, 236, 239, 0.2);
+        --toggle-color: #e9ecef;
       }
     }
 
@@ -426,7 +499,8 @@
         padding-left: 0;
       }
 
-      body::before {
+      body::before,
+      .theme-toggle {
         display: none;
       }
 
@@ -450,6 +524,48 @@
 </head>
 
 <body>
+
+<button type="button" class="theme-toggle" aria-label="Theme: System (switch to Light)" title="Theme: System (click for Light)">
+  <svg data-icon="system" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5zm2 0v9h12V5H6zm2 13h8a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2z"/></svg>
+  <svg data-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm0 16a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1zm9-7a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2h2zM5 11a1 1 0 1 1 0 2H3a1 1 0 1 1 0-2h2zm13.36-6.36a1 1 0 0 1 0 1.41l-1.41 1.42a1 1 0 1 1-1.42-1.42l1.42-1.41a1 1 0 0 1 1.41 0zM7.05 16.95a1 1 0 0 1 0 1.41l-1.41 1.42a1 1 0 1 1-1.42-1.42l1.42-1.41a1 1 0 0 1 1.41 0zm11.31 1.41a1 1 0 0 1-1.41 0l-1.42-1.41a1 1 0 1 1 1.42-1.42l1.41 1.42a1 1 0 0 1 0 1.41zM7.05 7.05a1 1 0 0 1-1.41 0L4.22 5.64a1 1 0 1 1 1.42-1.42l1.41 1.42a1 1 0 0 1 0 1.41z"/></svg>
+  <svg data-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
+<script>
+  (() => {
+    const root = document.documentElement;
+    const btn = document.querySelector(".theme-toggle");
+    const labels = {
+      system: ["Theme: System (switch to Light)", "Theme: System (click for Light)"],
+      light: ["Theme: Light (switch to Dark)", "Theme: Light (click for Dark)"],
+      dark: ["Theme: Dark (switch to System)", "Theme: Dark (click for System)"],
+    };
+    const syncLabel = () => {
+      const current = root.dataset.theme || "system";
+      const [ariaLabel, title] = labels[current] || labels.system;
+      btn.setAttribute("aria-label", ariaLabel);
+      btn.setAttribute("title", title);
+    };
+    syncLabel();
+    btn.addEventListener("click", () => {
+      const current = root.dataset.theme || "system";
+      const next = current === "system" ? "light" : current === "light" ? "dark" : "system";
+      if (next === "system") {
+        delete root.dataset.theme;
+        try {
+          localStorage.removeItem("theme");
+        } catch {
+        }
+      } else {
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem("theme", next);
+        } catch {
+        }
+      }
+      syncLabel();
+    });
+  })();
+</script>
 
 <main class="intro">
   <div class="intro-inner">
