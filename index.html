@@ -169,9 +169,9 @@
       font-weight: 700;
       text-transform: uppercase;
       color: #343a40;
-      /* Scales to fit the width remaining beside the photo + gap + padding. */
-      font-size: clamp(2.5rem, calc((100vw - 3.25rem - clamp(6rem, 25vw, 9rem)) / 3.15), 4.75rem);
-      line-height: 0.92;
+      /* Proportions the 2-line mobile title + handle to match the photo height. */
+      font-size: clamp(2.6rem, 15.6vw, 4.75rem);
+      line-height: 0.88;
     }
 
     p {
@@ -212,7 +212,7 @@
 
     .profile-photo {
       display: block;
-      width: clamp(6rem, 25vw, 9rem);
+      width: clamp(6.5rem, 30vw, 9rem);
       height: auto;
       aspect-ratio: 1;
       border-radius: 50%;
@@ -314,6 +314,7 @@
 
       h1 {
         font-size: 6rem;
+        line-height: 0.92;
       }
 
       .subheading {
