@@ -122,7 +122,7 @@
       font-family: 'Mulish';
       font-style: normal;
       font-weight: 400;
-      font-display: optional;
+      font-display: swap;
       src: url('fonts/mulish-latin-400.woff2') format('woff2');
     }
 
@@ -130,8 +130,28 @@
       font-family: 'Saira Extra Condensed';
       font-style: normal;
       font-weight: 700;
-      font-display: optional;
+      font-display: swap;
       src: url('fonts/saira-extra-condensed-latin-700.woff2') format('woff2');
+    }
+
+    @font-face {
+      font-family: 'Saira Fallback Condensed';
+      font-style: normal;
+      font-weight: 700;
+      src: local('Arial Narrow'), local('Roboto Condensed'), local('Liberation Sans Narrow');
+      size-adjust: 76%;
+      ascent-override: 105%;
+      descent-override: 20%;
+    }
+
+    @font-face {
+      font-family: 'Saira Fallback';
+      font-style: normal;
+      font-weight: 700;
+      src: local('Arial'), local('Helvetica Neue'), local('Roboto'), local('Liberation Sans');
+      size-adjust: 58%;
+      ascent-override: 135%;
+      descent-override: 25%;
     }
 
     :root {
@@ -176,7 +196,7 @@
 
     h1 {
       margin: 0;
-      font-family: 'Saira Extra Condensed', 'Arial Narrow', 'Roboto Condensed', 'Avenir Next Condensed', 'Helvetica Neue Condensed', sans-serif-condensed, sans-serif;
+      font-family: 'Saira Extra Condensed', 'Saira Fallback Condensed', 'Saira Fallback', 'Arial Narrow', 'Roboto Condensed', 'Avenir Next Condensed', 'Helvetica Neue Condensed', sans-serif-condensed, sans-serif;
       font-weight: 700;
       text-transform: uppercase;
       color: var(--heading-color);
@@ -245,7 +265,7 @@
       position: relative;
       width: 100%;
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto minmax(0, 1fr);
       column-gap: 1.25rem;
       align-items: center;
     }
@@ -254,6 +274,7 @@
       grid-column: 2;
       grid-row: 1;
       align-self: end;
+      min-width: 0;
       margin-bottom: 0;
     }
 
