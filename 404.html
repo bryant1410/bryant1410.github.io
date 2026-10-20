@@ -7,6 +7,7 @@
   <meta name="color-scheme" content="light dark">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#bd5d38">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self';">
 
   <script>
     if (/^\/(resume|cv)\.pdf$/i.test(location.pathname)) {
@@ -416,6 +417,12 @@
       }
       syncLabel();
     });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js");
+      });
+    }
   })();
 </script>
 

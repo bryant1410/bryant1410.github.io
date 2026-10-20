@@ -1,0 +1,13 @@
+# Santiago Castro
+
+> Santiago Castro is a Research Scientist at Netflix with a PhD in Computer Science from the University of Michigan. His research focuses on holistically representing multimodal sources (especially Vision and Language) for general-purpose applications and video tasks, as well as Computational Humor.
+
+## Information
+
+- [Website](https://santi.uy/): Official personal website and research overview.
+- [Curriculum Vitae](https://santi.uy/resume/main.pdf): Comprehensive academic and professional CV.
+- [Google Scholar](https://scholar.google.com/citations?user=i2LNBfUAAAAJ): Publications, citations, and research papers.
+- [GitHub](https://github.com/bryant1410): Open-source projects and code repositories.
+- [LinkedIn](https://www.linkedin.com/in/santiagocastroserra/): Professional profile and background.
+- [X (Twitter)](https://x.com/bryant1410): Research updates and discussions.
+- [Stack Overflow](https://stackoverflow.com/users/1165181/bryant1410): Developer contributions and answers.
