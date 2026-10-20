@@ -1,0 +1,21 @@
+{
+  "name": "Santiago Castro",
+  "short_name": "Santiago",
+  "description": "Personal website of Santiago Castro (@bryant1410), Research Scientist at Netflix.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#181a1b",
+  "theme_color": "#bd5d38",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/img/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

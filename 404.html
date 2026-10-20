@@ -6,11 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#bd5d38">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#bd5d38">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#181a1b">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self';">
 
   <script>
-    if (/^\/(resume|cv)\.pdf$/i.test(location.pathname)) {
+    if (/^\/(resume|cv)(\.pdf)?$/i.test(location.pathname)) {
       location.replace("/resume/main.pdf");
     }
 
@@ -29,6 +31,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
 
   <link rel="preload" href="/fonts/saira-extra-condensed-latin-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/mulish-latin-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -302,6 +305,26 @@
     };
     syncLabel();
 
+    const syncThemeColor = () => {
+      const current = root.dataset.theme;
+      const metaDark = document.querySelector('meta[name="theme-color"][media*="dark"]');
+      const metaLight = document.querySelector('meta[name="theme-color"][media*="light"]');
+      if (!metaDark || !metaLight) {
+        return;
+      }
+      if (current === "light") {
+        metaDark.setAttribute("content", "#bd5d38");
+        metaLight.setAttribute("content", "#bd5d38");
+      } else if (current === "dark") {
+        metaDark.setAttribute("content", "#181a1b");
+        metaLight.setAttribute("content", "#181a1b");
+      } else {
+        metaDark.setAttribute("content", "#181a1b");
+        metaLight.setAttribute("content", "#bd5d38");
+      }
+    };
+    syncThemeColor();
+
     let pressTimer = null;
     let didLongPress = false;
     let startX = 0;
@@ -416,6 +439,7 @@
         }
       }
       syncLabel();
+      syncThemeColor();
     });
   })();
 </script>

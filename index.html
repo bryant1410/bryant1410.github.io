@@ -57,7 +57,9 @@
   <meta name="description"
         content="Santiago Castro is a Research Scientist at Netflix working on multimodal (vision and language) learning, especially for video. PhD in CS, UMich.">
   <meta name="author" content="Santiago Castro (bryant1410)">
-  <meta name="theme-color" content="#bd5d38">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#bd5d38">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#181a1b">
 
   <meta property="og:title" content="Santiago Castro">
   <meta property="og:type" content="profile">
@@ -88,6 +90,7 @@
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
 
   <script type="application/ld+json">
     {
@@ -97,6 +100,7 @@
       "alternateName": "bryant1410",
       "url": "https://santi.uy/",
       "image": "https://santi.uy/img/profile.jpg",
+      "email": "mailto:santi.1410@hotmail.com",
       "jobTitle": "Research Scientist",
       "worksFor": {"@type": "Organization", "name": "Netflix", "url": "https://www.netflix.com/"},
       "alumniOf": {"@type": "CollegeOrUniversity", "name": "University of Michigan", "url": "https://umich.edu"},
@@ -782,6 +786,26 @@
     };
     syncLabel();
 
+    const syncThemeColor = () => {
+      const current = root.dataset.theme;
+      const metaDark = document.querySelector('meta[name="theme-color"][media*="dark"]');
+      const metaLight = document.querySelector('meta[name="theme-color"][media*="light"]');
+      if (!metaDark || !metaLight) {
+        return;
+      }
+      if (current === "light") {
+        metaDark.setAttribute("content", "#bd5d38");
+        metaLight.setAttribute("content", "#bd5d38");
+      } else if (current === "dark") {
+        metaDark.setAttribute("content", "#181a1b");
+        metaLight.setAttribute("content", "#181a1b");
+      } else {
+        metaDark.setAttribute("content", "#181a1b");
+        metaLight.setAttribute("content", "#bd5d38");
+      }
+    };
+    syncThemeColor();
+
     let pressTimer = null;
     let activeTooltipEl = null;
     let didLongPress = false;
@@ -912,6 +936,7 @@
         }
       }
       syncLabel();
+      syncThemeColor();
     });
   })();
 </script>
