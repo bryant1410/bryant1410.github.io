@@ -126,10 +126,10 @@
     }
 
     .theme-toggle {
-      -webkit-touch-callout: none;
       -webkit-user-select: none;
       user-select: none;
       touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
       position: fixed;
       top: 0.75rem;
       right: 0.75rem;
@@ -339,7 +339,7 @@
         pressTimer = setTimeout(() => {
           didLongPress = true;
           btn.dataset.tooltipActive = "";
-        }, 300);
+        }, 250);
       } else {
         hideTooltip();
       }
@@ -350,7 +350,7 @@
         const touch = e.touches ? e.touches[0] : e;
         const moveX = Math.abs(touch.clientX - startX);
         const moveY = Math.abs(touch.clientY - startY);
-        if (moveX > 10 || moveY > 10) {
+        if (moveX > 15 || moveY > 15) {
           clearPressTimer();
         }
       }
@@ -382,9 +382,7 @@
     document.addEventListener("pointerup", handleTouchEnd, { passive: true });
     document.addEventListener("pointercancel", () => {
       clearPressTimer();
-      if (!didLongPress) {
-        hideTooltip();
-      }
+      hideTooltip();
     }, { passive: true });
 
     document.addEventListener("click", (e) => {
@@ -397,7 +395,7 @@
 
     document.addEventListener("contextmenu", (e) => {
       if (isTouchInteraction && e.target && e.target.closest && e.target.closest(".theme-toggle")) {
-        e.preventDefault();
+        hideTooltip();
       }
     });
     btn.addEventListener("click", () => {
