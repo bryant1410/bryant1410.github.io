@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'self';">
 
   <link rel="preload" href="fonts/saira-extra-condensed-latin-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/mulish-latin-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -24,7 +25,14 @@
       // noinspection SpellCheckingInspection
       gtag("config", "G-2GEKPMQP8F");
 
+      let gaLoaded = false;
       const loadGa = () => {
+        if (gaLoaded) {
+          return;
+        }
+        gaLoaded = true;
+        events.forEach((ev) => window.removeEventListener(ev, loadGa));
+        clearTimeout(fallbackTimer);
         const gaScript = document.createElement("script");
         gaScript.async = true;
         // noinspection SpellCheckingInspection
@@ -32,11 +40,9 @@
         document.head.appendChild(gaScript);
       };
 
-      if ("requestIdleCallback" in window) {
-        requestIdleCallback(loadGa);
-      } else {
-        setTimeout(loadGa, 1);
-      }
+      const events = ["pointerdown", "scroll", "keydown", "touchstart"];
+      events.forEach((ev) => window.addEventListener(ev, loadGa, { passive: true, once: true }));
+      const fallbackTimer = setTimeout(loadGa, 4000);
     }
 
     try {
