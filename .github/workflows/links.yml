@@ -19,7 +19,9 @@ jobs:
 
       - name: Fetch and extract links from the CV (served from another repo)
         run: |
-          curl --fail --silent --show-error --location https://santi.uy/resume/main.pdf --output /tmp/resume.pdf
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-delay 5 --retry-all-errors \
+            https://santi.uy/resume/main.pdf --output /tmp/resume.pdf
           python3 - <<'PY'
           import re, sys, zlib
 
