@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /404.html
+
+Sitemap: https://santi.uy/sitemap.xml
