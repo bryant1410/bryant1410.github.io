@@ -10,4 +10,4 @@
 - [GitHub](https://github.com/bryant1410): Open-source projects and code repositories.
 - [LinkedIn](https://www.linkedin.com/in/santiagocastroserra/): Professional profile and background.
 - [X (Twitter)](https://x.com/bryant1410): Research updates and discussions.
-- [Stack Overflow](https://stackoverflow.com/users/1165181/bryant1410): Developer contributions and answers.
+- [Stack Overflow](https://stackoverflow.com/users/bryant1410): Developer contributions and answers.
