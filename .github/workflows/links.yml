@@ -61,6 +61,8 @@ jobs:
             --exclude '/?resume/main\.pdf$'
             --exclude '^https://web\.eecs\.umich\.edu/'
             --accept 200..=299,403,429,999
+            --max-retries 4
+            --retry-wait-time 5
             --no-progress
             index.html cv.html 404.html README.md sitemap.xml resume-links.txt
           fail: true
